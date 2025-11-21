@@ -35,7 +35,8 @@ class PatchSettings:
                  positive_adm_scale=1.5,
                  negative_adm_scale=0.8,
                  controlnet_softness=0.25,
-                 adaptive_cfg=7.0):
+                 adaptive_cfg=7.0,
+                 clip_weight_strategy=None):
         self.sharpness = sharpness
         self.adm_scaler_end = adm_scaler_end
         self.positive_adm_scale = positive_adm_scale
