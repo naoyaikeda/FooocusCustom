@@ -66,6 +66,7 @@ class AsyncTask:
         self.adm_scaler_end = args.pop()
         self.adaptive_cfg = args.pop()
         self.clip_skip = args.pop()
+        self.clip_weight_strategy = args.pop()
         self.sampler_name = args.pop()
         self.scheduler_name = args.pop()
         self.vae_name = args.pop()

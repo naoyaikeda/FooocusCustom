@@ -43,6 +43,7 @@ class PatchSettings:
         self.negative_adm_scale = negative_adm_scale
         self.controlnet_softness = controlnet_softness
         self.adaptive_cfg = adaptive_cfg
+        self.clip_weight_strategy = clip_weight_strategy
         self.global_diffusion_progress = 0
         self.eps_record = None
 
