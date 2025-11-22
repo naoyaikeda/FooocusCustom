@@ -209,7 +209,7 @@ def get_config_item_or_set_default(key, default_value, validator, disable_empty_
 
     if key not in visited_keys:
         visited_keys.append(key)
-    
+
     v = os.getenv(key)
     if v is not None:
         v = try_eval_env_var(v, expected_type)
@@ -573,6 +573,12 @@ default_clip_skip = get_config_item_or_set_default(
     default_value=2,
     validator=lambda x: isinstance(x, int) and 1 <= x <= modules.flags.clip_skip_max,
     expected_type=int
+)
+default_clip_weight_strategy = get_config_item_or_set_default(
+    key='default_clip_weight_strategy',
+    default_value=modules.flags.cw_standard,
+    validator=lambda x: x in modules.flags.clip_weight_options,
+    expected_type=str
 )
 default_overwrite_step = get_config_item_or_set_default(
     key='default_overwrite_step',
