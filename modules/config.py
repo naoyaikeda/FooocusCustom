@@ -169,7 +169,10 @@ def get_dir_or_set_default(key, default_value, as_array=False, make_directory=Fa
             for d in v:
                 makedirs_with_log(d)
         if all([os.path.exists(d) and os.path.isdir(d) for d in v]):
-            return v
+            if as_array:
+                return v
+            elif v:
+                return v[0]
 
     if v is not None:
         print(f'Failed to load config key: {json.dumps({key:v})} is invalid or does not exist; will use {json.dumps({key:default_value})} instead.')
