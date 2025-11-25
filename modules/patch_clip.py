@@ -54,7 +54,24 @@ def patched_encode_token_weights(self, token_weight_pairs):
                     if weight != 1.0:
                         z[i][j] = (z[i][j] - z_empty[j]) * weight + z_empty[j]
             new_mean = z.mean()
-            z = z * (original_mean / new_mean)
+
+            import modules.patch
+            import modules.flags as flags
+
+            pid = os.getpid()
+            strategy = flags.cw_standard
+            if pid in modules.patch.patch_settings:
+                strategy = modules.patch.patch_settings[pid].clip_weight_strategy
+
+            if strategy == flags.cw_remove:
+                pass
+            elif strategy == flags.cw_cap:
+                ratio = original_mean / new_mean
+                ratio = torch.nan_to_num(ratio, nan=1.0, posinf=100.0, neginf=100.0)
+                ratio = torch.clamp(ratio, min=-100.0, max=100.0)
+                z = z * ratio
+            else:
+                z = z * (original_mean / new_mean)
         output.append(z)
 
     if len(output) == 0:

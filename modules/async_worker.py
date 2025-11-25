@@ -66,6 +66,7 @@ class AsyncTask:
         self.adm_scaler_end = args.pop()
         self.adaptive_cfg = args.pop()
         self.clip_skip = args.pop()
+        self.clip_weight_strategy = args.pop()
         self.sampler_name = args.pop()
         self.scheduler_name = args.pop()
         self.vae_name = args.pop()
@@ -332,7 +333,8 @@ def worker():
             async_task.adm_scaler_positive,
             async_task.adm_scaler_negative,
             async_task.controlnet_softness,
-            async_task.adaptive_cfg
+            async_task.adaptive_cfg,
+            async_task.clip_weight_strategy
         )
 
     def save_and_log(async_task, height, imgs, task, use_expansion, width, loras, persist_image=True) -> list:
@@ -1462,7 +1464,7 @@ def worker():
                     preparation_steps, switch, tiled, total_count, use_expansion, use_style, use_synthetic_refiner,
                     width, persist_image)
                 async_task.enhance_stats[index] += 1
-                
+
                 if exception_result == 'continue':
                     continue
                 elif exception_result == 'break':

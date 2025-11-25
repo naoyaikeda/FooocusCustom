@@ -198,3 +198,9 @@ for name, value in Performance.list():
     if Performance.has_restricted_features(value):
         restricted_text = '*'
     performance_selections.append((f'{value} <span style="color: grey;"> \U00002223  {Steps[name].value} steps {restricted_text}</span>', Performance[name].value))
+
+# Clip Weighting
+cw_standard = 'Standard'
+cw_remove = 'Remove'
+cw_cap = 'Cap'
+clip_weight_options = [cw_standard, cw_remove, cw_cap]
