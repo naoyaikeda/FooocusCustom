@@ -105,7 +105,17 @@ def get_presets():
         print('No presets found.')
         return presets
 
-    return presets + [f[:f.index(".json")] for f in os.listdir(preset_folder) if f.endswith('.json')]
+# os.listdir の代わりに os.walk を使用して全階層を走査
+    json_files = []
+    for root, dirs, files in os.walk(preset_folder):
+        for f in files:
+            if f.endswith('.json'):
+                # preset_folder からの相対パスを取得（例: "my-personal/lazarus.json"）
+                rel_path = os.path.relpath(os.path.join(root, f), preset_folder)
+                # 拡張子を除去してリストに追加
+                json_files.append(rel_path.rsplit('.json', 1)[0].replace('\\', '/'))
+
+    return presets + sorted(json_files)
 
 def update_presets():
     global available_presets
